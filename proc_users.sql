@@ -1,9 +1,7 @@
---SQL Procedure
-
-
-CREATE OR ALTER PROCEDURE Suporte_MIG_ADD_USERS
+-- SQL Procedure
+CREATE OR ALTER PROCEDURE SUPORTE_ADD_USERS
 (
-    @FleetManagerId BIGINT,
+    @UserManagerId BIGINT,
     @Name VARCHAR(255),
     @Email VARCHAR(255),
     @PermissionGroupName VARCHAR(100)
@@ -21,19 +19,19 @@ BEGIN
         END
 
     SELECT @PermissionGroupId = PermissionGroupId FROM PermissionGroups
-    WHERE FleetManagerId = @FleetManagerId AND Name = @PermissionGroupName
+    WHERE UserManagerId = @UserManagerId AND Name = @PermissionGroupName
 
     INSERT INTO Users
-    (CreatedAt, Timezone, FleetManagerId, IsEnabled)
+    (CreatedAt, Timezone, UserManagerId, IsEnabled)
     VALUES
-        (GETUTCDATE(), NULL, @FleetManagerId, 1)
+        (GETUTCDATE(), NULL, @UserManagerId, 1)
 
     SET @UserId = CONVERT(BIGINT, SCOPE_IDENTITY())
 
     INSERT INTO Employees
-    (UserId, Name, FleetManagerId, Email)
+    (UserId, Name, UserManagerId, Email)
     VALUES
-        (@UserId, @Name, @FleetManagerId, @Email)
+        (@UserId, @Name, @UserManagerId, @Email)
 
     INSERT INTO PermissionGroupsUsers
     (PermissionGroupId, UserId)
