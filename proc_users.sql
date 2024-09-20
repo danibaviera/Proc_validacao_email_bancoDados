@@ -1,4 +1,4 @@
-
+--SQL Procedure
 
 
 CREATE OR ALTER PROCEDURE Suporte_MIG_ADD_USERS
